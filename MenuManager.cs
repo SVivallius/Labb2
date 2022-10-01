@@ -23,6 +23,15 @@ namespace Labb2
                 "Välj: ");
         }
 
+        public static void BuildActivateMenu(List<Appliance> appliances)
+        {
+            Console.Clear();
+            foreach(Appliance appliance in appliances)
+            {
+                Console.WriteLine(appliance.ToString());
+            }
+        }
+
         public static int Selection(int menuLength)
         {
             bool validOption = false;

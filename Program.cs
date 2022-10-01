@@ -1,20 +1,13 @@
 ﻿using Labb2;
 
 bool running = true;
+List<Appliance> appliances = new List<Appliance>();
 
 while (running)
 {
     MenuManager.BuildMenu();
-
-    // Felhantering: validOpt blir false om konverteringen misslyckas.
-    // Annars initieras variabeln selection med det konverterade värdet.
-    bool validOpt = Int32.TryParse(Console.ReadLine(), out int selection);
-    while (!validOpt)
-    {
-        Console.Write("Ogiltigt val! Försök igen: ");
-        validOpt = Int32.TryParse(Console.ReadLine(), out selection);
-    }
-
+    int selection = MenuManager.Selection(5);
+    
     switch (selection)
     {
         // Activate
@@ -23,6 +16,7 @@ while (running)
 
         // Register new
         case 2:
+            ItemManager.AddAppliance(ref appliances);
             break;
 
         // List registered
