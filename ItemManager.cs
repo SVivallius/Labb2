@@ -24,11 +24,58 @@ namespace Labb2
 
             Console.Write("Ange märke. Om okänd, lämna tom: ");
             string make = Console.ReadLine();
-            Console.Write("Ange skick: ");
+            Console.Write("Ange brukbart skick (Y/N): ");
             string condition = Console.ReadLine();
 
-            if (make.Length == 0) list.Add(new Appliance(type, condition));
-            else list.Add(new Appliance(type, make, condition));
+            if (make.Length == 0) list.Add(new Appliance(type, MenuManager.InterpretTrueFalse(condition)));
+            else list.Add(new Appliance(type, make, MenuManager.InterpretTrueFalse(condition)));
+        }
+
+        public static void ListAppliance(List<Appliance> apps)
+        {
+            for(int i = 0; i < apps.Count; i++)
+            {
+                Console.WriteLine(apps[i].ToString());
+            }
+        }
+
+        public static void LoadList(ref List<Appliance> appliances)
+        {
+            using (StreamReader sr = new StreamReader("AppList.dat"))
+            {
+                while (!sr.EndOfStream)
+                {
+                    if (sr.ReadLine() != null)
+                    {
+                        string storage = sr.ReadLine();
+                        string[] tempData = storage.Split(new string[] { "###" }, StringSplitOptions.None);
+
+                        switch (tempData.Length)
+                        {
+                            case 2: appliances.Add(new Appliance(tempData[0], MenuManager.InterpretTrueFalse(tempData[1]))); break;
+                            case 3: appliances.Add(new Appliance(tempData[0], tempData[1], MenuManager.InterpretTrueFalse(tempData[2]))); break;
+                        }
+                    }
+                    else break;
+                }
+                sr.Dispose();
+            }
+        }
+
+        public static void SaveList(ref List<Appliance> appliances)
+        {
+            using (FileStream stream = new FileStream("AppList.dat", FileMode.Create, FileAccess.Write))
+            {
+                using (StreamWriter sw = new StreamWriter(stream))
+                {
+                    for (int i = 0; i < appliances.Count; i++)
+                    {
+                        sw.WriteLine(appliances[i].ToDataString());
+                    }
+                    sw.Dispose();
+                }
+                stream.Dispose();
+            }
         }
     }
 
@@ -36,19 +83,19 @@ namespace Labb2
     {
         protected string type;
         protected string? make;
-        protected string Condition;
+        protected bool condition;
 
-        public Appliance(string type, string make, string condition)
+        public Appliance(string type, string make, bool condition)
         {
             this.type = type;
             this.make = make;
-            this.Condition = condition;
+            this.condition = condition;
         }
 
-        public Appliance(string type, string condition)
+        public Appliance(string type, bool condition)
         {
             this.type = type;
-            this.Condition = condition;
+            this.condition = condition;
         }
 
         public override string ToString()
@@ -56,9 +103,18 @@ namespace Labb2
             string collect = this.type;
             if (this.make != null) collect = collect + " av märket: " + this.make;
             collect = collect + "\n" +
-                this.Condition + "\n---------------------------";
+                this.condition + "\n---------------------------";
 
             return collect;
+        }
+
+        public string ToDataString()
+        {
+            string saveData = this.type;
+            if (this.make != null) saveData = saveData + "###" + this.make;
+            saveData = saveData + "###" + this.condition;
+
+            return saveData;
         }
     }
 

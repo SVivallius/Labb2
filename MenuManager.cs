@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -19,7 +20,8 @@ namespace Labb2
                 "[2] Registrera ny.\n" +
                 "[3] Lista.\n" +
                 "[4] Ta bort.\n" +
-                "[5] Avsluta applikation.\n\n" +
+                "[5] Avsluta applikation.\n" +
+                "[6] Spara lista.\n\n" +
                 "Välj: ");
         }
 
@@ -30,6 +32,64 @@ namespace Labb2
             {
                 Console.WriteLine(appliance.ToString());
             }
+        }
+
+        public static void AwaitConfirm()
+        {
+            Console.WriteLine("Tryck på valfri tangent för att återgå.");
+            Console.ReadKey();
+        }
+
+        public static void LogErrorHandling(Exception error)
+        {
+            string path = AppDomain.CurrentDomain.BaseDirectory;
+            using (FileStream stream = new FileStream("Error.txt", FileMode.Append, FileAccess.Write))
+            {
+                using (StreamWriter sr = new StreamWriter(stream))
+                {
+                    sr.WriteLine(error.ToString());
+                    sr.WriteLine(DateTime.Now.ToString());
+                }
+            }
+        }
+
+        public static bool InterpretTrueFalse(string input)
+        {
+            bool resolved = false;
+            bool interpreted = false;
+
+            while (!resolved)
+            {
+                switch (input.ToLower())
+                {
+                    case "true":
+                        interpreted = true;
+                        resolved = true;
+                        break;
+
+                    case "false":
+                        interpreted = false;
+                        resolved = true;
+                        break;
+
+                    case "y":
+                        interpreted = true;
+                        resolved = true;
+                        break;
+
+                    case "n":
+                        interpreted = false;
+                        resolved = true;
+                        break;
+
+                    default:
+                        Console.Write("Ogiltigt svar. Försök igen: ");
+                        resolved = false;
+                        input = Console.ReadLine();
+                        break;
+                }
+            }
+            return interpreted;
         }
 
         public static int Selection(int menuLength)
