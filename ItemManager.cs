@@ -77,6 +77,24 @@ namespace Labb2
                 stream.Dispose();
             }
         }
+
+        public static void SetCondition(ref List<Appliance> appliances)
+        {
+            bool resolved = false;
+            while (!resolved)
+            {
+                Console.Clear();
+                Console.Write("Ställ in skick för utrustning.\n" +
+                    "Vilket index har varan? (endast numeriskt svar): ");
+                int selection = MenuManager.Selection(appliances.Count());
+
+                Console.Write(appliances[selection-1].ToString() + "\n" +
+                    "Vill du ändra på utrustningens skick? (Y/N): ");
+
+
+                // DU ÄR HÄR I ARBETET JUST NU.
+            }
+        }
     }
 
     class Appliance
@@ -115,6 +133,11 @@ namespace Labb2
             saveData = saveData + "###" + this.condition;
 
             return saveData;
+        }
+
+        public void SetCondition(bool set)
+        {
+            this.condition = set;
         }
     }
 

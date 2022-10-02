@@ -92,7 +92,7 @@ namespace Labb2
             return interpreted;
         }
 
-        public static int Selection(int menuLength)
+        public static int Selection(int maxLength)
         {
             bool validOption = false;
             int output = 0;
@@ -105,7 +105,7 @@ namespace Labb2
                 try
                 {
                     output = Convert.ToInt32(input);
-                    if (output <= menuLength && output > 0)
+                    if (output <= maxLength && output > 0)
                     {
                         validOption = true;
                         break;
