@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.NetworkInformation;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -31,51 +32,40 @@ namespace Labb2
             else list.Add(new Appliance(type, make, MenuManager.InterpretTrueFalse(condition)));
         }
 
+        public static void RemoveAppliance(ref List<Appliance> list)
+        {
+            Console.Clear();
+            Console.Write("Funktion startad: Ta bort köksutrustning.\n\n" +
+                "Välj index som ska tas bort: ");
+            int selection = MenuManager.Selection(list.Count - 1);
+            Console.WriteLine(list[selection].ToString()+"\n" +
+                "Är korrekt utrustning vald? (Y/N): ");
+            string input = Console.ReadLine();
+            switch (input.ToLower())
+            {
+                case "y":
+                    list.RemoveAt(selection);
+                    Console.WriteLine("Objektet borttaget!");
+                    break;
+
+                case "n":
+                    Console.WriteLine("Inget objekt borttaget.");
+                    break;
+
+                default:
+                    Console.WriteLine("Felaktig inmatning!");
+                    break;
+            }
+        }
+
         public static void ListAppliance(List<Appliance> apps)
         {
+            Console.Clear();
             for(int i = 0; i < apps.Count; i++)
             {
                 Console.WriteLine(apps[i].ToString());
             }
-        }
-
-        public static void LoadList(ref List<Appliance> appliances)
-        {
-            using (StreamReader sr = new StreamReader("AppList.dat"))
-            {
-                while (!sr.EndOfStream)
-                {
-                    if (sr.ReadLine() != null)
-                    {
-                        string storage = sr.ReadLine();
-                        string[] tempData = storage.Split(new string[] { "###" }, StringSplitOptions.None);
-
-                        switch (tempData.Length)
-                        {
-                            case 2: appliances.Add(new Appliance(tempData[0], MenuManager.InterpretTrueFalse(tempData[1]))); break;
-                            case 3: appliances.Add(new Appliance(tempData[0], tempData[1], MenuManager.InterpretTrueFalse(tempData[2]))); break;
-                        }
-                    }
-                    else break;
-                }
-                sr.Dispose();
-            }
-        }
-
-        public static void SaveList(ref List<Appliance> appliances)
-        {
-            using (FileStream stream = new FileStream("AppList.dat", FileMode.Create, FileAccess.Write))
-            {
-                using (StreamWriter sw = new StreamWriter(stream))
-                {
-                    for (int i = 0; i < appliances.Count; i++)
-                    {
-                        sw.WriteLine(appliances[i].ToDataString());
-                    }
-                    sw.Dispose();
-                }
-                stream.Dispose();
-            }
+            Console.WriteLine("Utrustning listad.");
         }
 
         public static void SetCondition(ref List<Appliance> appliances)

@@ -25,6 +25,11 @@ namespace Labb2
                 "Välj: ");
         }
 
+        public static void BuildSubMenu()
+        {
+
+        }
+
         public static void BuildActivateMenu(List<Appliance> appliances)
         {
             Console.Clear();

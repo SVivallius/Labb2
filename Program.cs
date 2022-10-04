@@ -23,10 +23,14 @@ while (running)
 
         // List registered
         case 3:
+            ItemManager.ListAppliance(appliances);
+            MenuManager.AwaitConfirm();
             break;
 
         // Remove
         case 4:
+            ItemManager.RemoveAppliance(ref appliances);
+            MenuManager.AwaitConfirm();
             break;
 
         // Exit app
@@ -35,26 +39,6 @@ while (running)
                 "(Y/N): ");
             if (MenuManager.InterpretTrueFalse(Console.ReadLine())) running = false;
             else MenuManager.AwaitConfirm();
-            break;
-
-        // Temporary save function
-        case 6:
-            try
-            {
-                if (appliances.Count > 0)
-                {
-                    ItemManager.SaveList(ref appliances);
-                    Console.WriteLine("Listan sparad!");
-                }
-                else Console.WriteLine("Listan är tom! Vänligen registrera fler köksutrustning.");
-            }
-            catch (Exception error)
-            {
-                MenuManager.LogErrorHandling(error);
-                Console.WriteLine("Skrivning av fil misslyckad!\n" +
-                    "Fel loggfört.");
-            }
-            MenuManager.AwaitConfirm();
             break;
 
         default:
