@@ -1,47 +1,58 @@
-﻿using Labb2;
+﻿// Init application
+
+using Labb2;
 
 bool running = true;
-List<Appliance> appliances = new List<Appliance>();
-
+List<KitchenApp> apps = new List<KitchenApp>();
 
 while (running)
 {
     MenuManager.BuildMenu();
-    int selection = MenuManager.Selection(6);
-    
+    int selection = MenuManager.MenuSelection(5);
     switch (selection)
     {
-        // Activate
+        // Use application
         case 1:
+            MenuManager.BuildSubMenu(apps);
+
+            int subSelection = MenuManager.MenuSelection(3);
+
+            switch (subSelection)
+            {
+                case 1:
+                    break;
+
+                case 2:
+                    break;
+
+                case 3:
+                    break;
+
+                default:
+                    break;
+            }
+            MenuManager.AwaitConfirm();
             break;
 
-        // Register new
+        // Add new
         case 2:
-            ItemManager.AddAppliance(ref appliances);
             MenuManager.AwaitConfirm();
             break;
 
-        // List registered
+        // List apps
         case 3:
-            ItemManager.ListAppliance(appliances);
             MenuManager.AwaitConfirm();
             break;
 
-        // Remove
+        // Remove apps
         case 4:
-            ItemManager.RemoveAppliance(ref appliances);
             MenuManager.AwaitConfirm();
             break;
 
-        // Exit app
+        // Exit software
         case 5:
-            Console.Write("Är du säker på att du vill avsluta?\n" +
-                "(Y/N): ");
-            if (MenuManager.InterpretTrueFalse(Console.ReadLine())) running = false;
-            else MenuManager.AwaitConfirm();
-            break;
-
-        default:
+            MenuManager.AwaitConfirm();
+            running = false;
             break;
     }
 }

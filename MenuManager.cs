@@ -1,8 +1,7 @@
-﻿using Microsoft.VisualBasic;
+﻿
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -10,122 +9,88 @@ namespace Labb2
 {
     internal static class MenuManager
     {
-        public static void BuildMenu()
-        {
-            // Krav: Huvudmeny med följande val
-            Console.Clear();
-            Console.Write("Kontrollprogram, Köksutrustning.\n" +
-                "Vänlig välj nedan.\n\n" +
-                "[1] Aktivera.\n" +
-                "[2] Registrera ny.\n" +
-                "[3] Lista.\n" +
-                "[4] Ta bort.\n" +
-                "[5] Avsluta applikation.\n" +
-                "[6] Spara lista.\n\n" +
-                "Välj: ");
-        }
-
-        public static void BuildSubMenu()
-        {
-
-        }
-
-        public static void BuildActivateMenu(List<Appliance> appliances)
-        {
-            Console.Clear();
-            foreach(Appliance appliance in appliances)
-            {
-                Console.WriteLine(appliance.ToString());
-            }
-        }
-
-        public static void AwaitConfirm()
+        static public void AwaitConfirm()
         {
             Console.WriteLine("Tryck på valfri tangent för att återgå.");
             Console.ReadKey();
         }
 
-        public static void LogErrorHandling(Exception error)
+        public static int MenuSelection(int menuLength)
         {
-            string path = AppDomain.CurrentDomain.BaseDirectory;
-            using (FileStream stream = new FileStream("Error.txt", FileMode.Append, FileAccess.Write))
+            start:
+            Int32.TryParse(Console.ReadLine(), out int selection);
+            if (selection == 0 && selection > menuLength)
             {
-                using (StreamWriter sr = new StreamWriter(stream))
-                {
-                    sr.WriteLine(error.ToString());
-                    sr.WriteLine(DateTime.Now.ToString());
-                }
+                Console.Write("Ogiltigt val! Försök igen: ");
+                goto start;
             }
+            return selection;
         }
 
-        public static bool InterpretTrueFalse(string input)
+        public static bool ParseTruefalse(string input)
         {
             bool resolved = false;
-            bool interpreted = false;
+            bool result = false;
 
             while (!resolved)
             {
                 switch (input.ToLower())
                 {
-                    case "true":
-                        interpreted = true;
-                        resolved = true;
-                        break;
-
-                    case "false":
-                        interpreted = false;
-                        resolved = true;
-                        break;
-
-                    case "y":
-                        interpreted = true;
-                        resolved = true;
-                        break;
-
-                    case "n":
-                        interpreted = false;
-                        resolved = true;
-                        break;
+                    case "ja": result = true; resolved = true; break;
+                    case "j": result = true; resolved = true; break;
+                    case "nej": result = false; resolved = true; break;
+                    case "n": result = false; resolved = true; break;
 
                     default:
-                        Console.Write("Ogiltigt svar. Försök igen: ");
-                        resolved = false;
+                        Console.Write("Ogiltigt svar! Försök igen: ");
                         input = Console.ReadLine();
+                        resolved = false;
                         break;
                 }
             }
-            return interpreted;
+            return result;
         }
 
-        public static int Selection(int maxLength)
+        static public void BuildMenu()
         {
-            bool validOption = false;
-            int output = 0;
+            Console.Clear();
+            Console.Write("Styrprogram för köksutrustning.\n\n" +
+                "Välj:\n" +
+                "1) Använd\n" +
+                "2) Lägg till ny\n" +
+                "3) Lista\n" +
+                "4) Ta bort\n" +
+                "5) Avsluta\n\n" +
+                "Ditt val: ");
+        }
 
-            while (!validOption)
+        static public void BuildSubMenu(List<KitchenApp> list)
+        {
+            Console.Clear();
+            Console.WriteLine("Aktivering av utrustning.\n" +
+                "Det finns {0} utrustningar registerade", list.Count);
+            Console.Write("\nVälj utrustning: ");
+            int selection = MenuManager.ForceValidSelect();
+
+            while (selection <= 0 || selection >= list.Count)
+            {
+                Console.Write("Ogiltigt val! Försök igen: ");
+                selection = MenuManager.ForceValidSelect();
+            }
+
+
+        }
+
+        static private int ForceValidSelect()
+        {
+            int output = 0;
+            bool resolved = false;
+            while (!resolved)
             {
                 string input = Console.ReadLine();
+                resolved = Int32.TryParse(input, out output);
 
-                // Krav: Try-Catch
-                try
-                {
-                    output = Convert.ToInt32(input);
-                    if (output <= maxLength && output > 0)
-                    {
-                        validOption = true;
-                        break;
-                    }
-                    else
-                    {
-                        validOption = false;
-                        Console.Write("Ogiltigt val! Försök igen: ");
-                    }
-                }
-                catch
-                {
-                    validOption = false;
-                    Console.Write("Ogiltigt val! Försök igen: ");
-                }
+                if (!resolved) Console.Write("Ogiltigt svar! Försök igen: ");
             }
 
             return output;

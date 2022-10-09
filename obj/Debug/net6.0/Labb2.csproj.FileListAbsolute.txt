@@ -13,3 +13,18 @@ D:\0 - Programmering\ITHS\Labb2\Labb2\obj\Debug\net6.0\refint\Labb2.dll
 D:\0 - Programmering\ITHS\Labb2\Labb2\obj\Debug\net6.0\Labb2.pdb
 D:\0 - Programmering\ITHS\Labb2\Labb2\obj\Debug\net6.0\Labb2.genruntimeconfig.cache
 D:\0 - Programmering\ITHS\Labb2\Labb2\obj\Debug\net6.0\ref\Labb2.dll
+C:\Users\varul\Programmering\ITHS\Labb 2-2\bin\Debug\net6.0\Labb2.exe
+C:\Users\varul\Programmering\ITHS\Labb 2-2\bin\Debug\net6.0\Labb2.deps.json
+C:\Users\varul\Programmering\ITHS\Labb 2-2\bin\Debug\net6.0\Labb2.runtimeconfig.json
+C:\Users\varul\Programmering\ITHS\Labb 2-2\bin\Debug\net6.0\Labb2.dll
+C:\Users\varul\Programmering\ITHS\Labb 2-2\bin\Debug\net6.0\Labb2.pdb
+C:\Users\varul\Programmering\ITHS\Labb 2-2\obj\Debug\net6.0\Labb2.csproj.AssemblyReference.cache
+C:\Users\varul\Programmering\ITHS\Labb 2-2\obj\Debug\net6.0\Labb2.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\varul\Programmering\ITHS\Labb 2-2\obj\Debug\net6.0\Labb2.AssemblyInfoInputs.cache
+C:\Users\varul\Programmering\ITHS\Labb 2-2\obj\Debug\net6.0\Labb2.AssemblyInfo.cs
+C:\Users\varul\Programmering\ITHS\Labb 2-2\obj\Debug\net6.0\Labb2.csproj.CoreCompileInputs.cache
+C:\Users\varul\Programmering\ITHS\Labb 2-2\obj\Debug\net6.0\Labb2.dll
+C:\Users\varul\Programmering\ITHS\Labb 2-2\obj\Debug\net6.0\refint\Labb2.dll
+C:\Users\varul\Programmering\ITHS\Labb 2-2\obj\Debug\net6.0\Labb2.pdb
+C:\Users\varul\Programmering\ITHS\Labb 2-2\obj\Debug\net6.0\Labb2.genruntimeconfig.cache
+C:\Users\varul\Programmering\ITHS\Labb 2-2\obj\Debug\net6.0\ref\Labb2.dll
