@@ -18,8 +18,8 @@ namespace Labb2
         public static int MenuSelection(int menuLength)
         {
             start:
-            Int32.TryParse(Console.ReadLine(), out int selection);
-            if (selection == 0 && selection > menuLength)
+            bool resolved = Int32.TryParse(Console.ReadLine(), out int selection);
+            if (!resolved || selection <= 0 || selection > menuLength)
             {
                 Console.Write("Ogiltigt val! Försök igen: ");
                 goto start;

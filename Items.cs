@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace Labb2
@@ -24,6 +25,53 @@ namespace Labb2
             isFunctioning = MenuManager.ParseTruefalse(Console.ReadLine());
 
             list.Add(new (type, brand, isFunctioning));
+            Console.WriteLine("Utrustningen är registrerad!");
+        }
+
+        public static void RemoveItem(ref List<KitchenApp> list)
+        {
+            Console.Clear();
+            Console.Write($"Det finns {list.Count} antal utrustningar registrerade.\n" +
+                $"Välj index för borttagning: ");
+
+            int selection;
+            bool validOpt = Int32.TryParse(Console.ReadLine(), out selection);
+            while (!validOpt || selection <= 0 || selection > list.Count)
+            {
+                Console.Write("Ogiltigt val! Försök igen: ");
+                validOpt = Int32.TryParse(Console.ReadLine(), out selection);
+            }
+
+            Console.WriteLine(list[selection - 1].ToString);
+            Console.Write("Ta bort den valda utrustningen? (j/n): ");
+
+            bool accept = MenuManager.ParseTruefalse(Console.ReadLine());
+            if (!accept) MenuManager.AwaitConfirm(); return;
+
+            list.RemoveAt(selection - 1);
+            MenuManager.AwaitConfirm();
+            
+        }
+
+        public static void ListItems(List<KitchenApp> list)
+        {
+            Console.Clear();
+            
+            if (list.Count == 0)
+            {
+                Console.WriteLine("Det finns ingen köksutrustning registrerad!");
+                MenuManager.AwaitConfirm();
+                return;
+            }
+
+            for (int i = 0; i < list.Count; i++)
+            {
+                Console.WriteLine((i + 1) + ": " + list[i].ToListString());
+            }
+            Console.WriteLine("========================\n" +
+                "Listan skriven!");
+            MenuManager.AwaitConfirm();
+            return;
         }
     }
     internal abstract class Item : IKitchenAppliance
@@ -78,7 +126,12 @@ namespace Labb2
 
         public string ToListString()
         {
-            return base.Type + " --- " + base.Brand;
+            string returnValue = base.Type + " - " + base.Brand;
+
+            if (base.IsFunctioning) returnValue += " - Användbart skick";
+            else returnValue += "Trasig";
+
+            return returnValue;
         }
     }
 }
