@@ -19,9 +19,21 @@ namespace Labb2
             Console.Write("Registrering av ny utrustning:\n\n" +
                 "Ange typ: ");
             type = Console.ReadLine();
+            while (type.Length == 0)
+            {
+                Console.Write("Ogiltigt svar! Fältet kan ej vara tomt.\n" +
+                    "Försök igen: ");
+                type = Console.ReadLine();
+            }
             Console.Write("Ange märke: ");
             brand = Console.ReadLine();
-            Console.Write("Användbart skick? (y/n): ");
+            while (brand.Length == 0)
+            {
+                Console.Write("Ogiltigt svar! Fältet kan ej vara tomt.\n" +
+                    "Försök igen: ");
+                brand = Console.ReadLine();
+            }
+            Console.Write("Användbart skick? (j/n): ");
             isFunctioning = MenuManager.ParseTruefalse(Console.ReadLine());
 
             list.Add(new (type, brand, isFunctioning));
@@ -42,15 +54,18 @@ namespace Labb2
                 validOpt = Int32.TryParse(Console.ReadLine(), out selection);
             }
 
-            Console.WriteLine(list[selection - 1].ToString);
+            Console.WriteLine(list[selection - 1].ToString());
             Console.Write("Ta bort den valda utrustningen? (j/n): ");
 
             bool accept = MenuManager.ParseTruefalse(Console.ReadLine());
-            if (!accept) MenuManager.AwaitConfirm(); return;
+            if (!accept)
+            {
+                Console.WriteLine("Ingen förändring utförs.");
+                return;
+            }
 
             list.RemoveAt(selection - 1);
-            MenuManager.AwaitConfirm();
-            
+            Console.WriteLine("Den valda utrustningen är borttagen ur listan!");
         }
 
         public static void ListItems(List<KitchenApp> list)
@@ -60,7 +75,6 @@ namespace Labb2
             if (list.Count == 0)
             {
                 Console.WriteLine("Det finns ingen köksutrustning registrerad!");
-                MenuManager.AwaitConfirm();
                 return;
             }
 
@@ -70,7 +84,6 @@ namespace Labb2
             }
             Console.WriteLine("========================\n" +
                 "Listan skriven!");
-            MenuManager.AwaitConfirm();
             return;
         }
     }
@@ -129,7 +142,7 @@ namespace Labb2
             string returnValue = base.Type + " - " + base.Brand;
 
             if (base.IsFunctioning) returnValue += " - Användbart skick";
-            else returnValue += "Trasig";
+            else returnValue += " - Trasig";
 
             return returnValue;
         }

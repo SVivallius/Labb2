@@ -72,13 +72,28 @@ namespace Labb2
             Console.Write("\nVälj utrustning: ");
             int selection = MenuManager.ForceValidSelect();
 
-            while (selection <= 0 || selection >= list.Count)
+            while (selection <= 0 || selection > list.Count)
             {
                 Console.Write("Ogiltigt val! Försök igen: ");
                 selection = MenuManager.ForceValidSelect();
             }
 
-
+            bool functioning = list[selection - 1].IsFunctioning;
+            Console.WriteLine(list[selection - 1].ToString());
+            if (!functioning)
+            {
+                Console.WriteLine("Den valda utrustningen är ur funktion!");
+                return;
+            }
+            else Console.Write("Är det rätt applikation? (j/n): ");
+            if (!MenuManager.ParseTruefalse(Console.ReadLine()))
+            {
+                return;
+            }
+            else
+            {
+                Console.WriteLine("Aktiverar applikationen!");
+            }
         }
 
         static private int ForceValidSelect()

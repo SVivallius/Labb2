@@ -15,25 +15,6 @@ while (running)
         // Use application
         case 1:
             MenuManager.BuildSubMenu(apps);
-            int subSelection = MenuManager.MenuSelection(apps.Count);
-            bool functioning = apps[subSelection - 1].IsFunctioning;
-            Console.WriteLine(apps[subSelection - 1].ToString());
-            if (!functioning)
-            {
-                Console.WriteLine("Den valda utrustningen är ur funktion!");
-                MenuManager.AwaitConfirm();
-                break;
-            }
-            else Console.Write("Är det rätt applikation? (j/n): ");
-            if (!MenuManager.ParseTruefalse(Console.ReadLine()))
-            {
-                MenuManager.AwaitConfirm();
-                break;
-            }
-            else
-            {
-                Console.WriteLine("Aktiverar applikationen!");
-            }
             MenuManager.AwaitConfirm();
             break;
 
